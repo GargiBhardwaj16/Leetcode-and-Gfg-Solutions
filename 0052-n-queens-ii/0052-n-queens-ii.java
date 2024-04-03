@@ -1,42 +1,28 @@
 class Solution {
     public int totalNQueens(int n) {
-        char [][] board = new char[n][n];
+        int[] count = new int[1];
+        char[][] board = new char[n][n];
         for(int i = 0; i < board.length; i++) {
             for(int j = 0; j < board.length; j++) {
                 board[i][j] = '.';
             }
         }
-        
-        List<List<String>> ans = new ArrayList<>();
-        queen(board, 0, ans);
-        return ans.size();
+        queen(board, 0, count);
+        return count[0];
     }
 
-    static void queen(char[][] board, int row, List<List<String>> list) {
-
+    static void queen(char[][] board, int row, int[] count) {
         if(row == board.length) {
-
-            list.add(construct(board));
+            count[0]++;
             return;
         }
-
         for (int col = 0; col < board.length; col++) {
             if(isSafe(board, row, col)) {
                 board[row][col] = 'Q';
-                queen(board, row + 1, list);
+                queen(board, row + 1, count);
                 board[row][col] = '.';
             }
         }
-    }
-
-    static List<String> construct(char[][] board) {
-
-        List<String> internal = new ArrayList<>();
-        for (int i = 0; i < board.length; i++) {
-            String row = new String(board[i]);
-            internal.add(row);
-        }
-        return internal;
     }
 
     static boolean isSafe(char[][] board, int row, int col) {
@@ -50,17 +36,11 @@ class Solution {
 
         //for checking left diagonal
 
-        //int maxLeft = Math.min(row, col);
-
         for (int i = row-1,j=col-1; i >=0 && j>=0; i--,j--) {
             if(board[i][j] == 'Q') {
                 return false;
             }
         }
-
-        //for checking right diagonal
-
-        int maxRight = Math.min(row, board.length - 1 - col);
 
         for (int i = row-1,j=col+1; i >=0 && j<board.length; i--,j++) {
             if(board[i][j] == 'Q') {
