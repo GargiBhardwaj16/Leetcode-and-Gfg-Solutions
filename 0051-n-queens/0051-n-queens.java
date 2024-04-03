@@ -42,7 +42,7 @@ class Solution {
     static boolean isSafe(char[][] board, int row, int col) {
 
         //for checking vertical row
-        for (int i = 0; i < row; i++) {
+        for (int i = row-1; i>=0; i--) {
             if(board[i][col] == 'Q') {
                 return false;
             }
@@ -50,10 +50,10 @@ class Solution {
 
         //for checking left diagonal
 
-        int maxLeft = Math.min(row, col);
+        //int maxLeft = Math.min(row, col);
 
-        for (int i = 1; i <= maxLeft; i++) {
-            if(board[row - i][col - i] == 'Q') {
+        for (int i = row-1,j=col-1; i >=0 && j>=0; i--,j--) {
+            if(board[i][j] == 'Q') {
                 return false;
             }
         }
@@ -62,8 +62,8 @@ class Solution {
 
         int maxRight = Math.min(row, board.length - 1 - col);
 
-        for (int i = 1; i <= maxRight; i++) {
-            if(board[row - i][col + i] == 'Q') {
+        for (int i = row-1,j=col+1; i >=0 && j<board.length; i--,j++) {
+            if(board[i][j] == 'Q') {
                 return false;
             }
         }
