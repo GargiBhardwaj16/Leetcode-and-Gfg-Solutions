@@ -15,7 +15,7 @@ class Solution {
         return dp[i][j]=r+c;
     } 
     public int uniquePaths(int m, int n) {
-      int dp[][]=new int[m+1][n+1];
+      int dp[][]=new int[m][n];
       return f(dp,0,0,m,n);
     }
 }
