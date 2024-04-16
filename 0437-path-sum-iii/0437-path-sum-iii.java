@@ -14,24 +14,35 @@
  * }
  */
 class Solution {
-    public int solve(TreeNode root, int sum, long curr){
-        int count=0;
+    static HashMap<Long,Integer> m;
+    static int count;
+    public static void solve(TreeNode root, int sum, long curr){
          if(root==null){
-            return 0;
+            return ;
         }
         curr+=root.val;
+        
         if(curr==sum) count++;
-        int ls=solve(root.left,sum,curr);
-        int rs=solve(root.right,sum,curr);
-        return ls+rs+count;
+        if(m.containsKey(curr-sum)){
+            count+=m.get(curr-sum);
+        }
+        m.put(curr,m.getOrDefault(curr,0)+1);
+        solve(root.left,sum,curr);
+        solve(root.right,sum,curr);
+        m.put(curr,m.get(curr)-1);
+        
     }
     public int pathSum(TreeNode root, int targetSum) {
-        if(root==null){
+        m=new HashMap<>();
+        count=0;
+        solve(root,targetSum,0);
+        return count;
+        /*if(root==null){
             return 0;
         }
         int ans=solve(root,targetSum,0);
         int l=pathSum(root.left, targetSum);
         int r=pathSum(root.right, targetSum);
-        return ans+l+r;
+        return ans+l+r;*/
     }
 }
