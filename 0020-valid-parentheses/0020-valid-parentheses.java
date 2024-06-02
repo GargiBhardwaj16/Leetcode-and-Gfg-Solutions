@@ -12,7 +12,8 @@ class Solution {
               st.pop();
           }
           else{
-              st.push(s.charAt(i));
+              //st.push(s.charAt(i));
+              return false;
           }
        }
        if(st.isEmpty()) return true;
