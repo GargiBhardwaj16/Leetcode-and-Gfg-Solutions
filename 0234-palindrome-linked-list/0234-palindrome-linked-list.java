@@ -9,25 +9,36 @@
  * }
  */
 class Solution {
-    private boolean ispalindromeHelper(ListNode right){
-        if(right==null){
-            return true;
+     public static ListNode reverseList(ListNode head) {
+        ListNode temp=head;
+        ListNode prev=null;
+        while(temp!=null){
+            ListNode curr=temp;
+            temp=temp.next;
+            curr.next=prev;
+            prev=curr;
         }
-        boolean rres=ispalindromeHelper(right.next);
-        if(rres==false){
-            return false;
-        }
-        else if(right.val!=left.val){
-            return false;
-        }
-        else{
-        left=left.next;
-        return true;
-        }
+        return prev;
     }
-    ListNode left;
-    public boolean isPalindrome(ListNode head){
-         left=head;
-        return ispalindromeHelper(head);
+    public boolean isPalindrome(ListNode head) {
+        ListNode fast=head;
+        ListNode slow=head;
+        while(fast.next!=null&&fast.next.next!=null){
+            fast=fast.next.next;
+            slow=slow.next;
+        }
+        ListNode newHead=reverseList(slow.next);
+        ListNode temp1=head;
+        ListNode temp=newHead;
+        while(temp!=null){
+            if(temp.val!=temp1.val){
+                return false;
+            }
+            else{
+                temp1=temp1.next;
+                temp=temp.next;
+            }
+        }
+        return true;
     }
 }
