@@ -1,33 +1,25 @@
-class Solution{
-int rows , cols, totalIsland = 0;
-
+class Solution {
     public int numIslands(char[][] grid) {
-        rows = grid.length;
-        cols = grid[0].length;
-        if(rows == 0 || grid == null) return 0;
-        
-        for(int row = 0; row < rows ; row++) {
-            check(grid, row);
-        }
-        return totalIsland;
-    }
-
-    private void check(char[][] grid, int row) {
-        char[] currRow = grid[row];
-        for(int col = 0 ; col < cols; col++) {
-            if(currRow[col] == '1') {
-                totalIsland++;
-                bfs(grid, row, col);
+        int count = 0;
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (grid[i][j] == '1') {
+                    count += 1;
+                    BFS(grid, i, j);
+                }
             }
         }
+        return count;
     }
 
-
-    private void bfs(char[][] grid, int row, int col) {
-        grid[row][col] = '0'; //visited
-        if(row > 0 && grid[row - 1][col] == '1') bfs(grid, row - 1, col);
-        if(row + 1 < rows && grid[row + 1][col] == '1') bfs(grid, row + 1, col);
-        if(col > 0 && grid[row][col - 1] == '1') bfs(grid, row, col - 1);
-        if(col + 1 < cols && grid[row][col + 1] == '1') bfs(grid, row, col + 1);
+    public void BFS(char[][] grid, int i, int j) {
+        if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] != '1') {
+            return;
+        }
+        grid[i][j] = '0';
+        BFS(grid, i + 1, j);
+        BFS(grid, i - 1, j);
+        BFS(grid, i, j + 1);
+        BFS(grid, i, j - 1);
     }
 }
