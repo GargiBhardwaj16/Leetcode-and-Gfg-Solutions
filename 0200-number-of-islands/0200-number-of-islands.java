@@ -25,7 +25,6 @@ int rows , cols, totalIsland = 0;
 
     private void bfs(char[][] grid, int row, int col) {
         grid[row][col] = '0'; //visited
-        
         if(row > 0 && grid[row - 1][col] == '1') bfs(grid, row - 1, col);
         if(row + 1 < rows && grid[row + 1][col] == '1') bfs(grid, row + 1, col);
         if(col > 0 && grid[row][col - 1] == '1') bfs(grid, row, col - 1);
