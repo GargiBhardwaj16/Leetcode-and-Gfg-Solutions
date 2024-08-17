@@ -1,37 +1,29 @@
 class Solution {
-
     public long maxPoints(int[][] points) {
-        int cols = points[0].length;
-        long[] currentRow = new long[cols], previousRow = new long[cols];
-
-        for (int[] row : points) {
-            // runningMax holds the maximum value generated in the previous iteration of each loop
-            long runningMax = 0;
-
-            // Left to right pass
-            for (int col = 0; col < cols; ++col) {
-                runningMax = Math.max(runningMax - 1, previousRow[col]);
-                currentRow[col] = runningMax;
-            }
-
-            runningMax = 0;
-            // Right to left pass
-            for (int col = cols - 1; col >= 0; --col) {
-                runningMax = Math.max(runningMax - 1, previousRow[col]);
-                currentRow[col] = Math.max(currentRow[col], runningMax) +
-                row[col];
-            }
-
-            // Update previousRow for next iteration
-            previousRow = currentRow;
+        int m = points.length;
+        int n = points[0].length;
+        long[] dp = new long[n];
+        for (int j = 0; j < n; j++) {
+            dp[j] = points[0][j];
         }
-
-        // Find maximum points in the last row
+        for (int i = 1; i < m; i++) {
+            long[] new_dp = new long[n];
+            long leftMax = dp[0];
+            for (int j = 0; j < n; j++) {
+                leftMax = Math.max(leftMax, dp[j] + j);
+                new_dp[j] = points[i][j] + leftMax - j;
+            }
+            long rightMax = dp[n - 1] - (n - 1);
+            for (int j = n - 1; j >= 0; j--) {
+                rightMax = Math.max(rightMax, dp[j] - j);
+                new_dp[j] = Math.max(new_dp[j], points[i][j] + rightMax + j);
+            }
+            dp = new_dp;
+        }
         long maxPoints = 0;
-        for (int col = 0; col < cols; ++col) {
-            maxPoints = Math.max(maxPoints, previousRow[col]);
+        for (int j = 0; j < n; j++) {
+            maxPoints = Math.max(maxPoints, dp[j]);
         }
-
         return maxPoints;
     }
 }
